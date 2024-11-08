@@ -1,1 +1,185 @@
+import csv
+from datetime import datetime
 
+class item:
+
+
+/// Represents an item in the inventory.
+         Attributes:
+            name (str): The name of the item.
+            quantity (int): The quantity of the item.
+            location (str): The location of the item.
+            last_maintenance_date (str): The last maintenance date of the item in YYYY-MM-DD format.
+            serial_number (str): The serial number of the item.
+            type (str): The type of the item. name (str): The name of the item ///
+
+
+
+    def __init__(self, name, quantity, location, last_maintenance_date
+serial_number, type):
+
+
+/// Initialize an item.
+        Args:
+            name (str): The name of the item.
+            quantity (int): The quantity of the item.
+            location (str): The location of the item.
+            last_maintenance_date (str): The last maintenance date of the item in YYYY-MM-DD format.
+            serial_number (str): The serial number of the item.
+            type (str): The type of the item. ///
+
+
+        self.name = name
+        self.quantity = quantity
+        self.location = location
+        self.last_maintenance_date = last_maintenance_date
+        self.serial_number = serial_number
+        self.type = type
+
+class InventoryManager:
+
+  ///Manages the inventory of items.
+        Attributes:
+          inventory (list): A list of Item objects. ///
+
+
+    def __init__(self):
+
+///Initializes an InventoryManager object with an empty inventory. ///
+        self.inventory = []
+
+    def add_item(self, item):
+
+     
+        ///Adds an item to the inventory.
+              Args:
+                item (Item): The item to be added.
+              Returns:
+                None ///
+
+
+        self.inventory.append(item)
+        print(f"item '{item.name}' added successfully.")
+        print("For further information, call us on 0786390064 (Mr.Sirimanna)")
+
+    def update_item(self, serial_number, updated_item):
+
+   ///Updates an item in the inventory based on its serial number.
+        Args:
+            serial_number (str): The serial number of the item to update.
+            updated_item (Item): The updated item.
+        Returns:
+            bool: True if the item was updated, False otherwise. ///
+
+
+        for index, item in enumerate(self.inventory):
+            if item.serial_number == serial_number:
+                self.inventory[index] = updated_item
+                print(f"item '{serial_number}' updated successfully.")
+                return True
+        print(f"item with serial number '{serial_number}' not found.")
+        print("For further information, call us on 0786390064 (Mr.Sirimanna)")
+        return False
+
+    def remove_item(self, serial_number):
+
+        ///Removes an item from the inventory based on its serial number.
+            Args:
+              serial_number (str): The serial number of the item to remove.
+            Returns:
+              None ///
+
+        initial_length = len(self.inventory)
+        self.inventory = [item for item in self.inventory if item.serial_number != serial_number]
+        if len(self.inventory) < initial_length:
+            print(f"item '{serial_number}' removed successfully. Thank you")
+        else:
+            print(f"item with serial number '{serial_number}' not found, try again.")
+
+    def generate_report(self):
+
+        ///Generates a CSV report of the current inventory.
+              Returns:
+                None ///
+
+        with open('inventory_report.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(['Name', 'Quantity', 'Location', 'Last Maintenance Date', 'Serial Number', 'type'])
+            for item in self.inventory:
+                writer.writerow([item.name, item.quantity, item.location, item.last_maintenance_date,
+                                 item.serial_number, item.type])
+            print("Report generated successfully: inventory_report.csv")
+            print("For further information, call us on 0786390064 (Mr.Sirimanna)")
+
+def input_item_details():
+
+    ///Prompts the user to input details for an item and validates the input.
+        Returns:
+          Item or None: The created Item object if input is valid, otherwise None.///
+
+    name = input("Enter item Name: ")
+    quantity = int(input("Enter Quantity: "))
+    location = input("Enter Location: ")
+    last_maintenance_date = input("Enter Last Maintenance Date (YYYY-MM-DD): ")
+    serial_number = input("Enter Serial Number: ")
+    type = input("Enter type: ")
+    
+    try:
+        datetime.strptime(last_maintenance_date, '%Y-%m-%d')
+    except ValueError:
+        print("Incorrect date format. Please use YYYY-MM-DD.")
+        return None
+
+    return item(name, quantity, location, last_maintenance_date, serial_number, type)
+
+def main():
+
+  ///The main function that runs the inventory management system.
+        Returns:
+            None///
+
+    manager = InventoryManager()
+    
+    while True:
+        print("Welcome")
+        print("\nInventory Management System")
+        print("1. Add item")
+        print("2. Update item")
+        print("3. Remove item")
+        print("4. Generate Report")
+        print("5. Exit")
+        print("For further information, call us on 0786390064 (Mr.Sirimanna)")
+        
+        choice = input("Select  an option: ")
+        
+        if choice == '1':
+            item = input_item_details()
+            if item:
+                manager.add_item(item)
+                
+        elif choice == '2':
+            serial_number = input("Enter Serial Number of the item : ")
+            updated_item = input_item_details()
+            if updated_item:
+                manager.update_item(serial_number, updated_item)
+                
+        elif choice == '3':
+            serial_number = input("Enter Serial Number: ")
+            manager.remove_item(serial_number)
+            
+        elif choice == '4':
+            manager.generate_report()
+            
+        elif choice == '5':
+            print("Thank you.")
+            print("Exiting the program.")
+            print("welcome")
+            print("Have a nice day")
+            print("For further information, call us on 0786390064 (Mr.Sirimanna)")
+            break
+            
+        else:
+            print(" Sorry, Invalid selection. Please try again.")
+
+if __name__ == "__main__":
+    main()
