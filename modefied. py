@@ -1,77 +1,54 @@
 import csv
 from datetime import datetime
-
 class item:
-
-
-/// Represents an item in the inventory.
-         Attributes:
-            name (str): The name of the item.
-            quantity (int): The quantity of the item.
-            location (str): The location of the item.
-            last_maintenance_date (str): The last maintenance date of the item in YYYY-MM-DD format.
-            serial_number (str): The serial number of the item.
-            type (str): The type of the item. name (str): The name of the item ///
-
-
-
+// Represents an item in the inventory.
+    // Attributes:
+            //name (str): The name of the item.
+            //quantity (int): The quantity of the item.
+            //location (str): The location of the item.
+            //last_maintenance_date (str): The last maintenance date of the item in YYYY-MM-DD format.
+            //serial_number (str): The serial number of the item.
+            //type (str): The type of the item. name (str): The name of the item
     def __init__(self, name, quantity, location, last_maintenance_date
 serial_number, type):
-
-
-/// Initialize an item.
-        Args:
-            name (str): The name of the item.
-            quantity (int): The quantity of the item.
-            location (str): The location of the item.
-            last_maintenance_date (str): The last maintenance date of the item in YYYY-MM-DD format.
-            serial_number (str): The serial number of the item.
-            type (str): The type of the item. ///
-
-
+// Initialize an item.
+        //Args:
+            //name (str): The name of the item.
+            //quantity (int): The quantity of the item.
+            //location (str): The location of the item.
+            //last_maintenance_date (str): The last maintenance date of the item in YYYY-MM-DD format.
+            //serial_number (str): The serial number of the item.
+            //type (str): The type of the item.
         self.name = name
         self.quantity = quantity
         self.location = location
         self.last_maintenance_date = last_maintenance_date
         self.serial_number = serial_number
         self.type = type
-
 class InventoryManager:
-
-  ///Manages the inventory of items.
-        Attributes:
-          inventory (list): A list of Item objects. ///
-
-
+  //Manages the inventory of items.
+        //Attributes:
+          //inventory (list): A list of Item objects. 
     def __init__(self):
-
-///Initializes an InventoryManager object with an empty inventory. ///
+//Initializes an InventoryManager object with an empty inventory.
         self.inventory = []
-
     def add_item(self, item):
-
      
-        ///Adds an item to the inventory.
-              Args:
-                item (Item): The item to be added.
-              Returns:
-                None ///
-
-
+        //Adds an item to the inventory.
+              //Args:
+                //item (Item): The item to be added.
+              //Returns:
+                //None 
         self.inventory.append(item)
         print(f"item '{item.name}' added successfully.")
         print("For further information, call us on 0786390064 (Mr.Sirimanna)")
-
     def update_item(self, serial_number, updated_item):
-
-   ///Updates an item in the inventory based on its serial number.
-        Args:
-            serial_number (str): The serial number of the item to update.
-            updated_item (Item): The updated item.
-        Returns:
-            bool: True if the item was updated, False otherwise. ///
-
-
+   //Updates an item in the inventory based on its serial number.
+        //Args:
+            //serial_number (str): The serial number of the item to update.
+            //updated_item (Item): The updated item.
+        //Returns:
+            //bool: True if the item was updated, False otherwise. 
         for index, item in enumerate(self.inventory):
             if item.serial_number == serial_number:
                 self.inventory[index] = updated_item
@@ -80,28 +57,22 @@ class InventoryManager:
         print(f"item with serial number '{serial_number}' not found.")
         print("For further information, call us on 0786390064 (Mr.Sirimanna)")
         return False
-
     def remove_item(self, serial_number):
-
-        ///Removes an item from the inventory based on its serial number.
-            Args:
-              serial_number (str): The serial number of the item to remove.
-            Returns:
-              None ///
-
+        //Removes an item from the inventory based on its serial number.
+            //Args:
+              //serial_number (str): The serial number of the item to remove.
+            //Returns:
+              //None
         initial_length = len(self.inventory)
         self.inventory = [item for item in self.inventory if item.serial_number != serial_number]
         if len(self.inventory) < initial_length:
             print(f"item '{serial_number}' removed successfully. Thank you")
         else:
             print(f"item with serial number '{serial_number}' not found, try again.")
-
     def generate_report(self):
-
-        ///Generates a CSV report of the current inventory.
-              Returns:
-                None ///
-
+        //Generates a CSV report of the current inventory.
+              //Returns:
+                //None 
         with open('inventory_report.csv', 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(['Name', 'Quantity', 'Location', 'Last Maintenance Date', 'Serial Number', 'type'])
@@ -110,13 +81,10 @@ class InventoryManager:
                                  item.serial_number, item.type])
             print("Report generated successfully: inventory_report.csv")
             print("For further information, call us on 0786390064 (Mr.Sirimanna)")
-
 def input_item_details():
-
-    ///Prompts the user to input details for an item and validates the input.
-        Returns:
-          Item or None: The created Item object if input is valid, otherwise None.///
-
+    //Prompts the user to input details for an item and validates the input.
+        //Returns:
+          //Item or None: The created Item object if input is valid, otherwise None.
     name = input("Enter item Name: ")
     quantity = int(input("Enter Quantity: "))
     location = input("Enter Location: ")
@@ -129,15 +97,11 @@ def input_item_details():
     except ValueError:
         print("Incorrect date format. Please use YYYY-MM-DD.")
         return None
-
     return item(name, quantity, location, last_maintenance_date, serial_number, type)
-
 def main():
-
-  ///The main function that runs the inventory management system.
-        Returns:
-            None///
-
+  //The main function that runs the inventory management system.
+        //Returns:
+            //None
     manager = InventoryManager()
     
     while True:
@@ -180,6 +144,5 @@ def main():
             
         else:
             print(" Sorry, Invalid selection. Please try again.")
-
 if __name__ == "__main__":
     main()
